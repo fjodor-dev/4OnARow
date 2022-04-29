@@ -22,46 +22,52 @@ namespace _4OnARow
             
         }
 
-        public static void AddSelectedPieceToBoard(int indexOfBoard)
+        public static bool AddSelectedPieceToBoard(int indexOfBoard)
         {
             //guard close, check if the index is inbound
             if (indexOfBoard<0  || indexOfBoard >= Board.PlayBoard.GetLength(0))
             {
-                return;
+                return false;
             }
 
-            //Console.WriteLine("" + GameState.TurnOfPlayer.PlayerId);//test
-            GameState.TurnOfPlayer.AddSelectedPieceToBoard(indexOfBoard);
+            if(GameState.TurnOfPlayer.AddSelectedPieceToBoard(indexOfBoard))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         static void Main(string[] args)
         {
-            MakeTheGame(13,9,4);
+            MakeTheGame(7,6,2);
 
             do
             {
+                //SelectPiece();
+                //Console.WriteLine($"selected piece: {GameState.TurnOfPlayer.SelectedPiece}");
+                //AddSelectedPieceToBoard(7);
+                //Console.ReadLine();
+
+
+
                 GameState.TurnOfPlayer.SelectPiece();
+
+                Console.WriteLine(Board.PrintBoard());
+
+                Console.WriteLine($"Turn Of Player: {GameState.TurnOfPlayer.PlayerId}");
                 Console.WriteLine($"selected piece: {GameState.TurnOfPlayer.SelectedPiece}");
-                Console.ReadLine();
 
+                int input = 100;
 
-                // GameState.TurnOfPlayer.SelectPiece();
+                if (int.TryParse(Console.ReadLine(), out input) == false)
+                {
+                    continue;
+                }
 
-                // Console.WriteLine(Board.PrintBoard());
+                AddSelectedPieceToBoard(input);
 
-                // Console.WriteLine($"Turn Of Player: {GameState.TurnOfPlayer.PlayerId}");
-                // Console.WriteLine($"selected piece: {GameState.TurnOfPlayer.SelectedPiece}");
-
-                // int input = 100;
-
-                // if(int.TryParse(Console.ReadLine(),out input) == false)
-                // {
-                //     continue;
-                // }
-
-                // AddSelectedPieceToBoard(input);
-
-                //Console.Clear();
+                Console.Clear();
             }
 
             while (GameState.WinningPlayer == null);
