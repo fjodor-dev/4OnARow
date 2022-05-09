@@ -44,29 +44,21 @@ namespace _4OnARow
 
             do
             {
-                //SelectPiece();
-                //Console.WriteLine($"selected piece: {GameState.TurnOfPlayer.SelectedPiece}");
-                //AddSelectedPieceToBoard(7);
-                //Console.ReadLine();
-
-
-
-                GameState.TurnOfPlayer.SelectPiece();
-
                 Console.WriteLine(Board.PrintBoard());
-
                 Console.WriteLine($"Turn Of Player: {GameState.TurnOfPlayer.PlayerId}");
                 Console.WriteLine($"selected piece: {GameState.TurnOfPlayer.SelectedPiece}");
 
                 int input = 100;
 
-                if (int.TryParse(Console.ReadLine(), out input) == false)
+                if (int.TryParse(Console.ReadLine(), out input))
                 {
-                    continue;
+                    Console.WriteLine("add Piece to the bord");
+                    AddSelectedPieceToBoard(input);
                 }
-
-                AddSelectedPieceToBoard(input);
-
+                else
+                {
+                    SelectPiece();
+                }
                 Console.Clear();
             }
 

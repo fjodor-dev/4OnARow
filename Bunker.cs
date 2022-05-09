@@ -12,5 +12,9 @@ namespace _4OnARow
         {
 
         }
+        internal override void ReactToExplosion(Explosion kaboom)
+        {
+            //the bunker is immune to the Explosion and so it does nothing in this method
+        }
     }
 }

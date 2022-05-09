@@ -12,5 +12,21 @@ namespace _4OnARow
         {
 
         }
+
+        internal override void FallDown()
+        {
+            //normely fall down
+            base.FallDown();
+            //cause a explosion when it hits the bottom
+            MakeExplosion();
+        }
+
+        private void MakeExplosion()
+        {
+            Explosion explosion = new Explosion(this.IndexOfBoardX, this.IndexOfBoardY);
+            base.ReactToExplosion(explosion);
+            explosion.HExplosion();
+        }
+
     }
 }

@@ -206,6 +206,25 @@ namespace _4OnARow
             }
         }//WARNING: Headache imminent!
 
+        //if there has bin a Explosion All Pieces Need To Fall Down
+        internal static void LetAllPiecesFallDown()
+        {
+            //go over evry cullumn starting down going up
+            for (int y = PlayBoard.GetLength(1) - 1; y >= 0; y--)
+            {
+                //go over evry row 
+                for (int x = PlayBoard.GetLength(0) - 1; x >= 0; x--)
+                {
+                    //prevent nullPointerRefrenceExeptoin
+                    if (PlayBoard[x, y] != null)
+                    {
+                        //let the Piece on this pos falldown
+                        PlayBoard[x, y].FallDown();
+                    }
+                }
+            }
+        }
+
         //returns a string that represent the bord
         internal static string PrintBoard()
         {

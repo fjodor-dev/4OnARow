@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bunker.cs" />
+    <Compile Include="Barrier.cs" />
+    <Compile Include="Explosion.cs" />
     <Compile Include="VBom.cs" />
     <Compile Include="HBom.cs" />
     <Compile Include="Controller.cs" />

@@ -8,20 +8,17 @@ namespace _4OnARow
 {
     internal class Piece
     {
-
-        private Player _player;
-        private int _indexOfBoardX;
-        private int _indexOfBoardY;
-
-        internal Player Player { get => _player; private set => _player = value; }
-
+        internal Player Player { get; private set; }
+        protected int IndexOfBoardX { get; private set; }
+        protected int IndexOfBoardY { get; private set; }
+        
         internal Piece(Player player)
         {
             Player = player;
 
         }
 
-        internal virtual bool MoveIntoBoard(int indexOfBoardInput)
+        internal bool MoveIntoBoard(int indexOfBoardInput)
         {
             //guard close
             //check if the column we want to put the piece in is full if yes then return true
@@ -31,7 +28,7 @@ namespace _4OnARow
             }
 
             //set the x index of the piece on the board to the 
-            _indexOfBoardX = indexOfBoardInput;
+            IndexOfBoardX = indexOfBoardInput;
 
             FallDown();
             Board.CheckForRow();
@@ -40,20 +37,37 @@ namespace _4OnARow
             return true;
         }
 
-        protected virtual void FallDown()
+        internal virtual void FallDown()
         {
-            int endPosY = 0;
+            //when the piece needs to fall down when it is already in the bord we empty that Pos on the Board
+            Board.PlayBoard[IndexOfBoardX, IndexOfBoardY] = null;
 
-            for (int i = 0; i < Board.PlayBoard.GetLength(1); i++)
+            //start the falling of the piece from the current IndexOfBoardY position
+            for (int y = IndexOfBoardY; y < Board.PlayBoard.GetLength(1); y++)
             {
-                if (Board.PlayBoard[_indexOfBoardX, i] == null)
+                //if we are at the last row of the board then we break out of the loop so we dont go out of bound of the arrey when we check the pos under this piece (y+1)
+                if (y == Board.PlayBoard.GetLength(1)-1)
                 {
-                    endPosY = i;
+                    IndexOfBoardY = (Board.PlayBoard.GetLength(1) - 1);
+                    Board.PlayBoard[IndexOfBoardX, (Board.PlayBoard.GetLength(1) - 1)] = this;
+                    break;
+                }
+                //check the Pos under the y index we currenly are at if there is a Piece then we stop fulling and regester the current Y index
+                if (Board.PlayBoard[IndexOfBoardX, y+1] != null )
+                {
+                    IndexOfBoardY = y;
+                    Board.PlayBoard[IndexOfBoardX, y] = this;
+                    break;
                 }
             }
 
-            _indexOfBoardY = endPosY;
-            Board.PlayBoard[_indexOfBoardX, endPosY] = this;
+            Console.WriteLine($"endPosY is: {IndexOfBoardY}");
+
+        }
+
+        internal virtual void ReactToExplosion(Explosion kaboom)
+        {
+            Board.PlayBoard[IndexOfBoardX, IndexOfBoardY] = null;
         }
 
         public override string ToString()
