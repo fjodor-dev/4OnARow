@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _4OnARow
 {
@@ -126,7 +122,7 @@ namespace _4OnARow
                     //if the winning player is known then the loop stops
                     //and it also stops when we go outside of the board then we get a IndexOutOfRangeException
                     //and we also need to be before the corner of the board where a row simply isnt posible because the corner is to small for a diagonal row that you can win with
-                    while (GameState.WinningPlayer == null && allVerticalRows >= lenghtToWin-1)
+                    while (GameState.WinningPlayer == null && allVerticalRows >= lenghtToWin - 1)
                     {
                         CheckThisPos(PlayBoard[x, y]);
                         x++;
@@ -193,7 +189,7 @@ namespace _4OnARow
                     //if the winning player is known then the loop stops
                     //and it also stops when we go outside of the board then we get a IndexOutOfRangeException
                     //and we also need to be before the corner of the board where a row simply isnt posible because the corner is to small for a diagonal row that you can win with
-                   while (GameState.WinningPlayer == null && allCollumns < boardWidth - (lenghtToWin - 1))
+                    while (GameState.WinningPlayer == null && allCollumns < boardWidth - (lenghtToWin - 1))
                     {
                         CheckThisPos(PlayBoard[x, y]);
                         x++;
@@ -228,54 +224,102 @@ namespace _4OnARow
         //returns a string that represent the bord
         internal static string PrintBoard()
         {
-            string result = "   ";
+            int lenghtOfBoard = PlayBoard.GetLength(0);
+            int heightOfBoard = PlayBoard.GetLength(1);
+            string result = "_";
+            string emptyPlace = "       |";
+            string lineOfBoard = "=======|";
 
-            for (int x = 0; x < PlayBoard.GetLength(0); x++)
+            //drow the first line of the board that shows the indexes
+            for (int x = 0; x < lenghtOfBoard; x++)
             {
-                if (x<10)
+                if (x < 10)
                 {
-                    result += $"_0{x}_";
+                    result += $"___0{x}___";
                     continue;
                 }
-                result += $"_{x}_";
+                result += $"___{x}___";
             }
-            result += "__\n";
+            result += "\n|";
 
-            for (int y = 0; y < _playBoard.GetLength(1); y++)
+            void drowLineOfBoard()
             {
-                if (y < 10)
+                for (int x = 0; x < lenghtOfBoard; x++)
                 {
-                    result += $"0{y} ";
-                } 
-                else 
-                {
-                    result += $"{y} ";
+                    result += lineOfBoard;
                 }
-                
-                for (int x = 0; x < _playBoard.GetLength(0); x++)
-                {
-                    //caching of the Piece that is on this POS
-                    Piece pieceOnThisPos = _playBoard[x, y];
+                result += "\n|";
+            }
 
+            void drowLineWithPieces(int line123, int rowOnTheBoard)
+            {
+                for (int x = 0; x < lenghtOfBoard; x++)
+                {
                     //if it is null we continue the loop so we dont get a NullReferenceException
-                    if (pieceOnThisPos == null)
+                    if (_playBoard[x, rowOnTheBoard] == null)
                     {
-                        result += $"| _ ";
+                        //drow a emptyPlace if there is no piece here
+                        result += emptyPlace;
                         continue;
                     }
 
-                    //choose the right icon for the piece depending on the Player.playerId of the Piece
-                    switch (pieceOnThisPos.Player.PlayerId)
-                    {
-                        case 1: result += "| A "; continue;
-                        case 2: result += "| B "; continue;
-                        case 3: result += "| C "; continue;
-                        case 4: result += "| D "; continue;
-                        default: result += "| ? "; continue;
-                    }
+                    //now that we now it isnt null get the player id so we later now what icon we need to drow that represents this piece
+                    int playerId = _playBoard[x, rowOnTheBoard].Player.PlayerId;
+                    char icon = _playBoard[x, rowOnTheBoard].Icon;
 
+                    //this switch decides which line of the piece we are going to drow
+                    switch (line123)
+                    {
+                        case 1:
+                            {
+                                switch (playerId)
+                                {
+                                    case 1: result +=  $"   |   |"; continue;
+                                    case 2: result +=  $" ===== |"; continue;
+                                    case 3: result +=  $" == == |"; continue;
+                                    case 4: result +=  $"   =   |"; continue;
+                                    default: result += emptyPlace; continue;
+                                }
+                            }
+                        case 2:
+                            {
+                                switch (playerId)
+                                {
+                                    case 1: result +=  $" =={icon}== |"; continue;
+                                    case 2: result +=  $" | {icon} | |"; continue;
+                                    case 3: result +=  $"   {icon}   |"; continue;
+                                    case 4: result +=  $"  ={icon}=  |"; continue;
+                                    default: result += emptyPlace; continue;
+                                }
+                            }
+                        case 3:
+                            {
+                                switch (playerId)
+                                {
+                                    case 1: result += $"   |   |"; continue;
+                                    case 2: result += $" ===== |"; continue;
+                                    case 3: result += $" == == |"; continue;
+                                    case 4: result += $" ===== |"; continue;
+                                    default: result += emptyPlace; continue;
+                                }
+                            }
+                        default:
+                        {
+                            result += emptyPlace;
+                        }
+                        break;
+                    }
                 }
-                result += "|\n";
+                result += "\n|";
+            }
+
+            //here we use the above local functions to drow evry line for evry row on the board
+            for (int y = 0; y < heightOfBoard; y++)
+            {
+                drowLineWithPieces(1, y);
+                drowLineWithPieces(2, y);
+                drowLineWithPieces(3, y);
+                drowLineOfBoard();
             }
             return result;
         }

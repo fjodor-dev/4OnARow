@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace _4OnARow
 {
-    internal class Barrier : Piece
+    internal class Wall : Piece
     {
-        internal Barrier(Player player) : base(player)
+        internal Wall(Player player) : base(player)
         {
-
+            Icon = 'W';
         }
         internal override void ReactToExplosion(Explosion kaboom)
         {

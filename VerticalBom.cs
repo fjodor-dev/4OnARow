@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace _4OnARow
 {
-    internal class VBom : Piece
+    internal class VerticalBom : Piece
     {
-        internal VBom(Player player) : base(player)
+        internal VerticalBom(Player player) : base(player)
         {
 
         }

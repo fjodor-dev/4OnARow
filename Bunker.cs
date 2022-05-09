@@ -11,6 +11,7 @@ namespace _4OnARow
         internal Bunker(Player player) : base(player)
         {
 
+            Icon = 'B';
         }
         internal override void ReactToExplosion(Explosion kaboom)
         {

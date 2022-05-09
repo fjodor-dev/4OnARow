@@ -30,13 +30,12 @@ namespace _4OnARow
         //add all the specail pieces the player can use
         private void InitializeSpecialPieces()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
-                _specialPieces.Add(new HBom(this));
-                _specialPieces.Add(new VBom(this));
+                _specialPieces.Add(new HorizontalBom(this));
+                _specialPieces.Add(new VerticalBom(this));
                 _specialPieces.Add(new Bunker(this));
-
-                //_specialPieces.Add(new Barrier(this));
+                _specialPieces.Add(new Wall(this));
             }
 
             

@@ -8,10 +8,12 @@ namespace _4OnARow
 {
     internal class Piece
     {
+        private char _Icon = 'o';
         internal Player Player { get; private set; }
         protected int IndexOfBoardX { get; private set; }
         protected int IndexOfBoardY { get; private set; }
-        
+        internal char Icon { get => _Icon; set => _Icon = value; }
+
         internal Piece(Player player)
         {
             Player = player;
