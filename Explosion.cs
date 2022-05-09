@@ -7,7 +7,7 @@ namespace _4OnARow
         internal bool ExplosionOngoing { get; set; }
         internal int IndexOfBoardX { get; private set; }
         internal int IndexOfBoardY { get; private set; }
-        public Explosion(int indexOfBoardX, int indexOfBoardY)
+        internal Explosion(int indexOfBoardX, int indexOfBoardY)
         {
             IndexOfBoardX = indexOfBoardX;
             IndexOfBoardY = indexOfBoardY;

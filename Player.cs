@@ -37,10 +37,6 @@ namespace _4OnARow
                 _specialPieces.Add(new Bunker(this));
                 _specialPieces.Add(new Wall(this));
             }
-
-            
-            
-
         }
 
         //cycle trew list of pieces
@@ -118,8 +114,6 @@ namespace _4OnARow
             //if it is a valid move we return true so we can use that later for the GUI
             return false;
         }
-
-
 
     }
 }

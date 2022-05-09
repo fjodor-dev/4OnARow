@@ -72,11 +72,5 @@ namespace _4OnARow
             Console.ReadKey();
 
         }
-
-
-
-
-
-
     }
 }
